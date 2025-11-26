@@ -1,0 +1,18 @@
+pip install flask
+pip install flask_sqlalchemy
+pip install flask_migrate
+pip install flask_jwt_extended
+pip install flask_cors
+pip install werkzeug
+pip install itsdangerous
+pip install click
+pip install python-dotenv
+
+
+
+⭐ Optional but Recommended
+pip install gunicorn
+pip install gevent
+
+
+

@@ -1,0 +1,43 @@
+# ----------------------------------------------------
+# ✅ FLASK MIGRATION SETUP SCRIPT (PowerShell)
+# ----------------------------------------------------
+
+# 🔹 Step 1: Check & Delete Old Migrations Folder
+if (Test-Path -Path "migrations") {
+    Write-Output "`n✔ migrations folder exists. Deleting it to start fresh..."
+    Remove-Item -Recurse -Force migrations
+} else {
+    Write-Output "`n✔ migrations folder does not exist. Proceeding..."
+}
+
+# 🔹 Step 2: Delete Old SQLite Database File
+if (Test-Path -Path "pythonlogin.db") {
+    Write-Output "`n✔ pythonlogin.db exists. Deleting the database file..."
+    Remove-Item pythonlogin.db
+} else {
+    Write-Output "`n✔ pythonlogin.db does not exist. Proceeding..."
+}
+
+# 🔹 Step 3: Set the FLASK_APP environment variable
+$env:FLASK_APP = "run.py"
+Write-Output "`n✔ FLASK_APP set to run.py"
+
+# 🔹 Step 4: Initialize the Migration Environment
+Write-Output "`n🚀 Running: flask db init"
+flask db init
+
+# 🔹 Step 5: Generate a Migration Script
+Write-Output "`n🚀 Running: flask db migrate -m 'Initial migration.'"
+flask db migrate -m "Initial migration."
+
+# 🔹 Step 6: Apply Migrations to the Database
+Write-Output "`n🚀 Running: flask db upgrade"
+flask db upgrade
+
+# 🔹 Step 7: Show Current Migration Version
+Write-Output "`n🔎 Current migration version:"
+flask db current
+
+# 🔹 Step 8: List All Migration History (Optional)
+Write-Output "`n🧾 Full migration history:"
+flask db history

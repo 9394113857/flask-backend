@@ -1,0 +1,30 @@
+# 🟦 If you need EXACT versions for stability
+# (Recommended for deployment):
+
+pip install flask==3.0.3
+pip install flask_sqlalchemy==3.1.1
+pip install flask_migrate==4.0.7
+pip install flask_jwt_extended==4.7.0
+pip install flask_cors==4.0.0
+pip install werkzeug==3.0.2
+pip install itsdangerous==2.1.2
+pip install click==8.1.7
+pip install python-dotenv==1.0.1
+
+# 🟢 Database Drivers (if needed later)
+
+# SQLite → built-in (no install needed)
+
+# MySQL (optional future use):
+# pip install mysqlclient
+
+# PostgreSQL (optional):
+# pip install psycopg2-binary
+
+🟣 Development Tools (optional but useful):-
+# pip install black
+# pip install pylint
+# pip install flask-shell-ipython
+
+
+

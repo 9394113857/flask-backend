@@ -1,0 +1,118 @@
+###############################################################
+#  FLASK API TESTING — FULL CRUD WORKFLOW
+#  FILE: curl_commands.txt
+#  BACKEND URL: http://127.0.0.1:5000
+#  TOKEN IS HANDLED AUTOMATICALLY
+###############################################################
+
+
+===============================================================
+ STEP 0 — HELLO WORLD TEST (CHECK SERVER IS RUNNING)
+===============================================================
+curl http://127.0.0.1:5000/
+
+
+
+===============================================================
+ STEP 1 — CHECK IF USERS TABLE IS EMPTY
+===============================================================
+curl http://127.0.0.1:5000/users
+
+
+
+===============================================================
+ STEP 2 — REGISTER A NEW USER
+===============================================================
+curl -X POST http://127.0.0.1:5000/register ^
+-H "Content-Type: application/json" ^
+-d "{ \"username\": \"raghu\", \"password\": \"123456\", \"name\": \"Raghu\", \"email\": \"raghu@example.com\", \"phone\": \"9999999999\", \"address\": \"Hyderabad\" }"
+
+
+
+===============================================================
+ STEP 3 — CHECK USERS AFTER REGISTRATION
+===============================================================
+curl http://127.0.0.1:5000/users
+
+
+
+===============================================================
+ STEP 4 — LOGIN AND SAVE JWT TOKEN AUTOMATICALLY
+===============================================================
+:: Run login and extract token programmatically
+FOR /F "tokens=2 delims=:," %%a IN ('
+  curl -X POST http://127.0.0.1:5000/login -H "Content-Type: application/json" -d "{ \"username\": \"raghu\", \"password\": \"123456\" }"
+') DO SET TOKEN=%%a
+
+:: Remove quotes around token
+SET TOKEN=%TOKEN:"=%
+
+echo.
+echo ======================================
+echo TOKEN STORED SUCCESSFULLY:
+echo %TOKEN%
+echo ======================================
+
+
+
+===============================================================
+ STEP 5 — GET USER BY ID
+===============================================================
+curl -X GET http://127.0.0.1:5000/user/1 ^
+-H "Authorization: Bearer %TOKEN%"
+
+
+
+===============================================================
+ STEP 6 — UPDATE USER DETAILS
+===============================================================
+curl -X PUT http://127.0.0.1:5000/update/1 ^
+-H "Authorization: Bearer %TOKEN%" ^
+-H "Content-Type: application/json" ^
+-d "{ \"name\": \"Raghu Updated\", \"address\": \"Updated Address\" }"
+
+
+
+===============================================================
+ STEP 7 — VERIFY UPDATE (GET USER BY ID AGAIN)
+===============================================================
+curl -X GET http://127.0.0.1:5000/user/1 ^
+-H "Authorization: Bearer %TOKEN%"
+
+
+
+===============================================================
+ STEP 8 — VERIFY UPDATE (FETCH ALL USERS)
+===============================================================
+curl http://127.0.0.1:5000/users
+
+
+
+===============================================================
+ STEP 9 — DELETE USER (CURRENT LOGGED-IN USER)
+===============================================================
+curl -X DELETE http://127.0.0.1:5000/user ^
+-H "Authorization: Bearer %TOKEN%"
+
+
+
+===============================================================
+ STEP 10 — CHECK USER BY ID (SHOULD BE NOT FOUND)
+===============================================================
+curl -X GET http://127.0.0.1:5000/user/1 ^
+-H "Authorization: Bearer %TOKEN%"
+
+
+
+===============================================================
+ STEP 11 — CHECK USERS TABLE (SHOULD BE EMPTY)
+===============================================================
+curl http://127.0.0.1:5000/users
+
+
+
+===============================================================
+ STEP 12 — LOGOUT TOKEN (OPTIONAL)
+===============================================================
+curl -X POST http://127.0.0.1:5000/logout ^
+-H "Authorization: Bearer %TOKEN%"
