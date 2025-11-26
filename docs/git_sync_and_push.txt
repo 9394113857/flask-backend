@@ -1,0 +1,63 @@
+##############################################
+# GIT SYNC + MERGE + PUSH — FULL WORKFLOW
+# For situations where:
+#   - Remote repo has changes
+#   - Local repo also has changes
+#   - Push is rejected (fetch first)
+##############################################
+
+# --------------------------------------------
+# STEP 1 — CHECK CURRENT BRANCH
+# --------------------------------------------
+git branch
+
+# --------------------------------------------
+# STEP 2 — SWITCH TO MAIN BRANCH
+# (Only if not already on main)
+# --------------------------------------------
+git checkout main
+
+# --------------------------------------------
+# STEP 3 — FETCH LATEST REMOTE CHANGES
+# (This does NOT modify your local files)
+# --------------------------------------------
+git fetch origin
+
+# --------------------------------------------
+# STEP 4 — PULL REMOTE CHANGES WITH MERGE
+# Required when remote has commits you don’t have.
+# --------------------------------------------
+git pull origin main
+
+# --------------------------------------------
+# IF MERGE MESSAGE SCREEN (VIM) APPEARS:
+# FOLLOW THESE KEYBOARD STEPS EXACTLY:
+#
+#   1. Press: i
+#   2. Type message:
+#         Merged remote main into local main
+#   3. Press: ESC
+#   4. Type:  :wq
+#   5. Press: ENTER
+#
+# After this Git will finish the merge.
+# --------------------------------------------
+
+# --------------------------------------------
+# STEP 5 — ADD YOUR LOCAL CHANGES
+# --------------------------------------------
+git add .
+
+# --------------------------------------------
+# STEP 6 — COMMIT
+# --------------------------------------------
+git commit -m "Updated Flask backend after Angular integration"
+
+# --------------------------------------------
+# STEP 7 — PUSH TO REMOTE MAIN (NOW IT WILL WORK)
+# --------------------------------------------
+git push -u origin main
+
+##############################################
+# WORKFLOW COMPLETE
+##############################################
